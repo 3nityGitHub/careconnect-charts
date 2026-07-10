@@ -7,7 +7,7 @@ replicaCount: 2
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: 361769596212.dkr.ecr.eu-west-2.amazonaws.com/careconnect/auth-service
+  repository: 361769596212.dkr.ecr.eu-west-2.amazonaws.com/careconnect/notifications-service
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -57,23 +57,18 @@ service:
   port: 8000
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
-
 ingress:
-  enabled: true
-  className: alb
-  annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:361769596212:certificate/bed5058e-447f-452b-b66e-0d1e2db15f65
-    alb.ingress.kubernetes.io/healthcheck-path: /health
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: careconnect.talium-tech.com
+    - host: chart-example.local
       paths:
-        - path: /auth
-          pathType: Prefix
+        - path: /
+          pathType: ImplementationSpecific
   tls: []
-
     # - secretName: chart-example-tls
     #   hosts:
     #     - chart-example.local
